@@ -3,6 +3,7 @@ cnode:clg node
 */
 #include<stdlib.h>
 #include<stdio.h>
+#include<string.h>
 #define A1SEATS 8 //maximim number of seats 
 #define B2SEATS 8 //for reservations in clgs
 #define GMSEATS 9 //for different categories
@@ -30,9 +31,9 @@ snode* generatePQueue(snode* catlist,snode* studentlist,char ch)
 		{
 			snode* new1=malloc(sizeof(snode));
 			new1->lptr=new1->rptr=NULL;
-			new1->name=studentlist->name;
+			strcpy((new1->name),(studentlist->name));
 			new1->rank=studentlist->rank;
-			new1->cat=studentlist->cat; //clg not required
+			strcpy((new1->cat),(studentlist->cat));
 			new1->uid=studentlist->uid;
 			
 			if(!catlist)
