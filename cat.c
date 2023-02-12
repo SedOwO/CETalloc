@@ -1,6 +1,3 @@
-/* snode: student node
-cnode:clg node  
-*/
 #include<stdlib.h>
 #include<stdio.h>
 #include<string.h>
@@ -9,32 +6,33 @@ cnode:clg node
 #define GMSEATS 9 //for different categories
 typedef struct Student
 {
+	int uid;
 	char name[20];
 	int rank;
 	char cat[2];
 	char clg[10];//in database this should hold NULL
-	int uid[5];
 	struct Student *lptr, *rptr;
-}snode;
+}node;
 typedef struct College
 {
 	char name[20];
-	snode* pupils[25];//clg list will have student nodes assigned to them.
+	node* pupils[25];//clg list will have student nodes assigned to them.
 }college;
 
 //fn for inputs
-/*clg allocating()
+/*clg allocating(college c1, A1, B2, GM)
 {
-	//
+	count variables
+	return c1;
 }
 */
-snode* generatePQueue(snode* catlist,snode* studentlist,char ch)
+node* generatePQueue(node* catlist,node* studentlist,char ch)
 {
 	while(studentlist)
 	{
 		if(studentlist->cat[0]==ch)
 		{
-			snode* new1=malloc(sizeof(snode));
+			node* new1=malloc(sizeof(node));
 			new1->lptr=new1->rptr=NULL;
 			strcpy((new1->name),(studentlist->name));
 			new1->rank=studentlist->rank;
@@ -54,7 +52,7 @@ snode* generatePQueue(snode* catlist,snode* studentlist,char ch)
 				catlist=new1;
 				goto TRAVERSE;
 			}
-			snode *temp=catlist;
+			node *temp=catlist;
 			while(temp->rptr && ((temp->rptr)->rank)<new1->rank)//asscending priority
 				temp=temp->rptr; //find spot
 			//appedning
@@ -71,8 +69,8 @@ TRAVERSE:	studentlist=studentlist->rptr;
 
 void main()
 {
-	snode* studentlist; //to dynamically create and store students info.
-	snode* A1, *B2, *GM;
+	node* studentlist; //to dynamically create and store students info.
+	node* A1, *B2, *GM;
 	college rv, bsm, jss, msr, rns, pes;
 	A1=generatePQueue(A1,studentlist, 'A');
 	B2=generatePQueue(B2,studentlist, 'B');
