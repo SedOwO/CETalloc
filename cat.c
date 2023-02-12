@@ -26,6 +26,31 @@ typedef struct College
 	return c1;
 }
 */
+
+node* input(node *studentList){
+        int n;
+        printf("Number of students: \n");
+        scanf("%d",&n);
+        printf("\nenter details in the order: uid, name, rank, catageory:\n");
+        while(n--)
+        {
+                node* new1=malloc(sizeof(node));
+                scanf("%d%s%d%s", &new1->uid, new1->name, &new1->rank, new1->cat);
+                new1->lptr=new1->rptr=NULL;
+                
+                node* temp;
+                if(!studentList)
+                        studentList=new1;
+                else 
+                {
+                        studentList->lptr=new1;
+                        new1->rptr=studentList;
+                        studentList=new1;
+                }
+        }
+        return studentList;
+}
+
 node* generatePQueue(node* catlist,node* studentlist,char ch)
 {
 	while(studentlist)
