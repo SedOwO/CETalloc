@@ -70,10 +70,17 @@ TRAVERSE:	studentlist=studentlist->rptr;
 void main()
 {
 	node* studentlist; //to dynamically create and store students info.
-	node* A1, *B2, *GM;
+	node* A1, *B2, *GM;//prioity queues	
 	college rv, bsm, jss, msr, rns, pes;
 	A1=generatePQueue(A1,studentlist, 'A');
 	B2=generatePQueue(B2,studentlist, 'B');
 	GM=generatePQueue(GM,studentlist, 'G');
-
+	//implicit hierarchy of clgs
+	//double pointers cuz i like pain. and queue must be updated.
+	rv=collegeAllocator(rv,&A1,&B2,&GM); 
+	pes=collegeAllocator(pes,&A1,&B2,&GM);
+	msr=collegeAllocator(msr,&A1,&B2,&GM);
+	bms=collegeAllocator(bms,&A1,&B2,&GM);
+	rns=collegeAllocator(rns,&A1,&B2,&GM);
+	jss=collegeAllocator(jss,&A1,&B2,&GM);
 }
