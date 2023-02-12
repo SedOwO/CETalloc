@@ -49,6 +49,7 @@ snode* generatePQueue(snode* catlist,snode* studentlist,char ch)
 		}
 		studentlist=studentlist->rptr;
 	}
+	return catlist;
 }
 
 void main()
