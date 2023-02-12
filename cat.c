@@ -37,15 +37,16 @@ snode* generatePQueue(snode* catlist,snode* studentlist,char ch)
 			
 			if(!catlist)
 				catlist=new1;
-			snode *temp=catlist;
-			while((temp->rank)<new1->rank)//asscending priority
-				temp=temp->rptr; //find spot
-			//appedning
-			new1->rptr=temp->rptr;
-			if(temp->rptr) //to avoid segufault
-				(temp->rtpr)->lptr=new1;
-			temp->rptr=new1;
-			
+			else{
+				snode *temp=catlist;
+				while((temp->rank)<new1->rank)//asscending priority
+					temp=temp->rptr; //find spot
+				//appedning
+				new1->rptr=temp->rptr;
+				if(temp->rptr) //to avoid segufault
+					(temp->rtpr)->lptr=new1;
+				temp->rptr=new1;
+			}
 		}
 		studentlist=studentlist->rptr;
 	}
