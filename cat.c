@@ -20,9 +20,14 @@ typedef struct College
 {
 	char name[20];
 	snode* pupils[25];//clg list will have student nodes assigned to them.
-	struct College *lptr, *rptr;
-}cnode;
+}college;
 
+//fn for inputs
+/*clg allocating()
+{
+	//
+}
+*/
 snode* generatePQueue(snode* catlist,snode* studentlist,char ch)
 {
 	while(studentlist)
@@ -68,7 +73,7 @@ void main()
 {
 	snode* studentlist; //to dynamically create and store students info.
 	snode* A1, *B2, *GM;
-	cnode *rv, *rns, *pes, *bms, *msr, *jss;
+	college rv, bsm, jss, msr, rns, pes;
 	A1=generatePQueue(A1,studentlist, 'A');
 	B2=generatePQueue(B2,studentlist, 'B');
 	GM=generatePQueue(GM,studentlist, 'G');
