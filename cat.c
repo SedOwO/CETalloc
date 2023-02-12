@@ -30,7 +30,7 @@ node* generatePQueue(node* catlist,node* studentlist,char ch)
 {
 	while(studentlist)
 	{
-		if(studentlist->cat[0]==ch)
+		if((studentlist->cat)[0]==ch)
 		{
 			node* new1=malloc(sizeof(node));
 			new1->lptr=new1->rptr=NULL;
@@ -67,6 +67,67 @@ TRAVERSE:	studentlist=studentlist->rptr;
 	return catlist;
 }
 
+college collegeAllocator(college c, node** A1, node** B2, node** GM)
+{
+	int count=0;
+	node* dQed;
+	while(count<A1SEATS)
+	{
+		dQed=malloc(sizeof(node));
+		dQed->uid=(*A1)->uid;
+		strcpy(dQed->name,(*A1)->name);
+		dQed->rank=(*A1)->rank;
+		strcpy(dQed->cat,(*A1)->cat);
+		strcpy(dQed->clg,c.name);
+		(c.pupils)[count]=dQed;
+		
+		if(!(*A1)->rptr)
+			free(*A1);
+		else{
+			(*A1)=(*A1)->rptr;
+			free((*A1)->lptr);
+		}
+		count++;
+	}
+	while(count<B2SEATS+A1SEATS)
+	{
+		dQed=malloc(sizeof(node));
+		dQed->uid=(*B2)->uid;
+		strcpy(dQed->name,(*B2)->name);
+		dQed->rank=(*B2)->rank;
+		strcpy(dQed->cat,(*B2)->cat);
+		strcpy(dQed->clg,c.name);
+		
+		if(!(*B2)->rptr)
+			free(*B2);
+		else{
+			(*B2)=(*B2)->rptr;
+			free((*B2)->lptr);
+		}
+		(c.pupils)[count]=dQed;
+		count++;
+	}
+	while(count<A1SEATS+B2SEATS+GMSEATS)
+	{
+		dQed=malloc(sizeof(node));
+		dQed->uid=(*GM)->uid;
+		strcpy(dQed->name,(*GM)->name);
+		dQed->rank=(*GM)->rank;
+		strcpy(dQed->cat,(*GM)->cat);
+		strcpy(dQed->clg,c.name);
+		
+		if(!(*GM)->rptr)
+			free(*GM);
+		else{
+			(*GM)=(*GM)->rptr;
+			free((*GM)->lptr);
+		}
+		(c.pupils)[count]=dQed;
+		count++;
+	}
+	return c;
+}
+
 void main()
 {
 	node* studentlist; //to dynamically create and store students info.
@@ -77,6 +138,8 @@ void main()
 	GM=generatePQueue(GM,studentlist, 'G');
 	//implicit hierarchy of clgs
 	//double pointers cuz i like pain. and queue must be updated.
+	//strcpy names of colleges
+	//redo this entire bitomg.
 	rv=collegeAllocator(rv,&A1,&B2,&GM); 
 	pes=collegeAllocator(pes,&A1,&B2,&GM);
 	msr=collegeAllocator(msr,&A1,&B2,&GM);
