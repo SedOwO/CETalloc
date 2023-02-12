@@ -11,7 +11,7 @@ typedef struct Student
 	char name[20];
 	int rank;
 	char cat[2];
-	char clg[10];
+	char clg[10];//in database this should hold NULL
 	int uid[5];
 	struct Student *lptr, *rptr;
 }snode;
@@ -21,29 +21,43 @@ typedef struct College
 	snode* pupils[25];//clg list will have student nodes assigned to them.
 	struct College *lptr, *rptr;
 }cnode;
-int main()
+
+snode* generatePQueue(snode* catlist,snode* studentlist,char ch)
 {
-    snode* studentlist; //to dynamically create and store students info.
-    snode* A1, *B2, *GM;
-    cnode *rv, *rns, *pes, *bms, *msr, *jss;
-    
-    
-    
-    int ch;
-    int rank;
-    for(;;)
-    {
-        printf("\n\n2023 CET CHOICE ENTRY\n");
-        printf("1.Insert\n2.Display\n3.exit\n");
-        printf("ENTER YOUR CHOICE: ");
-        scanf("%d",&ch);
-        switch(ch)
-        {
-            case 1:insert();break;
-            case 2:display();break;
-            case 3:exit (0);
-            default:printf("Wrong choice\n");
-        }
-    }
+	while(studentlist)
+	{
+		if(studentlist->cat[0]==ch)
+		{
+			snode* new1=malloc(sizeof(snode));
+			new1->lptr=new1->rptr=NULL;
+			new1->name=studentlist->name;
+			new1->rank=studentlist->rank;
+			new1->cat=studentlist->cat; //clg not required
+			new1->uid=studentlist->uid;
+			
+			if(!catlist)
+				catlist=new1;
+			snode *temp=catlist;
+			while((temp->rank)<new1->rank)//asscending priority
+				temp=temp->rptr; //find spot
+			//appedning
+			new1->rptr=temp->rptr;
+			if(temp->rptr) //to avoid segufault
+				(temp->rtpr)->lptr=new1;
+			temp->rptr=new1;
+			
+		}
+		studentlist=studentlist->rptr;
+	}
 }
 
+void main()
+{
+	snode* studentlist; //to dynamically create and store students info.
+	snode* A1, *B2, *GM;
+	cnode *rv, *rns, *pes, *bms, *msr, *jss;
+	A1=generatePQueue(A1,studentlist, 'A');
+	B2=generatePQueue(B2,studentlist, 'B');
+	GM=generatePQueue(GM,studentlist, 'G');
+
+}
