@@ -4,8 +4,7 @@
 #define A1SEATS 8 //maximim number of seats 
 #define B2SEATS 8 //for reservations in clgs
 #define GMSEATS 9 //for different categories
-typedef struct Student
-{
+typedef struct Student{
 	int uid;
 	char name[20];
 	int rank;
@@ -13,8 +12,7 @@ typedef struct Student
 	char clg[10];
 	struct Student *lptr, *rptr;
 }node;
-typedef struct College
-{
+typedef struct College{
 	char name[20];
 	node* pupils[25];
 }college;
@@ -24,8 +22,7 @@ node* input(node *studentList){
         printf("Number of students(<=150):\n");
         scanf("%d",&n);
         printf("\nEnter Student Details:\n UID   NAME   RANK   CATEGORY:\n");
-        while(n--)
-        {
+        while(n--){
                 node* new1=malloc(sizeof(node));
                 scanf("%d%s%d%s", &new1->uid, new1->name, &new1->rank, new1->cat);
                 new1->lptr=new1->rptr=NULL;
@@ -33,8 +30,7 @@ node* input(node *studentList){
                 node* temp;
                 if(!studentList)
                         studentList=new1;
-                else 
-                {
+                else{
                         studentList->lptr=new1;
                         new1->rptr=studentList;
                         studentList=new1;
@@ -43,12 +39,9 @@ node* input(node *studentList){
         return studentList;
 }
 
-node* generatePQueue(node* catlist,node* studentlist,char ch)
-{
-	while(studentlist)
-	{
-		if((studentlist->cat)[0]==ch)
-		{
+node* generatePQueue(node* catlist,node* studentlist,char ch){
+	while(studentlist){
+		if((studentlist->cat)[0]==ch){
 			node* new1=malloc(sizeof(node));
 			new1->lptr=new1->rptr=NULL;
 			strcpy((new1->name),(studentlist->name));
@@ -56,14 +49,12 @@ node* generatePQueue(node* catlist,node* studentlist,char ch)
 			strcpy((new1->cat),(studentlist->cat));
 			new1->uid=studentlist->uid;
 			
-			if(!catlist)
-			{	
+			if(!catlist){	
 				catlist=new1;
 				goto TRAVERSE;
 			}
 			//first node edge case
-			if(catlist->rank > new1->rank) //insert front
-			{	
+			if(catlist->rank > new1->rank){ //insert front	
 				catlist->lptr=new1;
 				new1->rptr=catlist;
 				catlist=new1;
@@ -85,12 +76,10 @@ TRAVERSE:	studentlist=studentlist->rptr;
 	return catlist;
 }
 
-college collegeAllocator(college c, node** A1, node** B2, node** GM)
-{
+college collegeAllocator(college c, node** A1, node** B2, node** GM){
 	int count=0;
 	node* dQed;
-	while(count<A1SEATS)
-	{
+	while(count<A1SEATS){
 		dQed=malloc(sizeof(node));
 		dQed->uid=(*A1)->uid;
 		strcpy(dQed->name,(*A1)->name);
@@ -107,8 +96,7 @@ college collegeAllocator(college c, node** A1, node** B2, node** GM)
 		}
 		count++;
 	}
-	while(count<B2SEATS+A1SEATS)
-	{
+	while(count<B2SEATS+A1SEATS){
 		dQed=malloc(sizeof(node));
 		dQed->uid=(*B2)->uid;
 		strcpy(dQed->name,(*B2)->name);
@@ -125,8 +113,7 @@ college collegeAllocator(college c, node** A1, node** B2, node** GM)
 		(c.pupils)[count]=dQed;
 		count++;
 	}
-	while(count<A1SEATS+B2SEATS+GMSEATS)
-	{
+	while(count<A1SEATS+B2SEATS+GMSEATS){
 		dQed=malloc(sizeof(node));
 		dQed->uid=(*GM)->uid;
 		strcpy(dQed->name,(*GM)->name);
@@ -146,6 +133,40 @@ college collegeAllocator(college c, node** A1, node** B2, node** GM)
 	return c;
 }
 
+node* deleteStudents(node* studentList){
+	printf("Enter number of students withdrawing from KEA College allocation:\n");
+	int n,uid, foundFlag;
+	node* temp;
+	scanf("%d", &n);
+	printf("Enter the UIDs of %d students:\n", n);
+	
+	while(n--){
+		scanf("%d",&uid);
+		temp= studentList; foundFlag=0;
+		while(temp!=NULL){ //to access every node
+			if(temp->uid==uid){
+				foundFlag=1;
+				printf("Removing student %d and freeing seat in %s\n", temp->uid, temp->clg); 
+				if(temp==studentList){//first node nuking
+					studentList=studentList->rptr;
+					free(studentList->lptr);
+					studentList->lptr=NULL;
+					temp=studentList;
+					continue;
+				}
+				(temp->lptr)->rptr=temp->rptr; 
+				if(temp->rptr) //if temp is NOT last node
+					(temp->rptr)->lptr=temp->lptr; 
+				free(temp);
+			}
+			temp=temp->rptr; //traversal wen miss
+		}
+		if(foundFlag==0)
+			printf("Student %d not found\n", uid);
+	}//end of one student nuking while
+	return studentList;	
+}
+
 void nukeTree(node* root){
 	if(root){
 		nukeTree(root->lptr);
@@ -154,8 +175,7 @@ void nukeTree(node* root){
 	}
 }
 
-void main()
-{
+void main(){
 	node* studentlist;
 	node* A1, *B2, *GM;//prioity queues
 	A1=generatePQueue(A1,studentlist, 'A');
