@@ -146,6 +146,14 @@ college collegeAllocator(college c, node** A1, node** B2, node** GM)
 	return c;
 }
 
+void nukeTree(node* root){
+	if(root){
+		nukeTree(root->lptr);
+		nukeTree(root->rptr);
+		free(root);
+	}
+}
+
 void main()
 {
 	node* studentlist;
@@ -163,9 +171,13 @@ void main()
 	strcpy(a[4].name,"RNSIT");
 	strcpy(a[5].name,"JSSATE");
 	
-	//college allocation
+	//college allocation round 1
 	for(int i=0; i<6;i++)
 		a[i]=collegeAllocator(a[i],&A1,&B2,&GM);
+	
+	//to remake tree for round 2
+	nukeTree(root);
+	root=NULL;
 	
 	
 }
