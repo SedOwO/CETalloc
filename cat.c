@@ -149,19 +149,23 @@ college collegeAllocator(college c, node** A1, node** B2, node** GM)
 void main()
 {
 	node* studentlist;
-	node* A1, *B2, *GM;//prioity queues	
-	college rv, bsm, jss, msr, rns, pes;
+	node* A1, *B2, *GM;//prioity queues
 	A1=generatePQueue(A1,studentlist, 'A');
 	B2=generatePQueue(B2,studentlist, 'B');
 	GM=generatePQueue(GM,studentlist, 'G');
-	//implicit hierarchy of clgs
-	//double pointers cuz i like pain. and queue must be updated.
-	//strcpy names of colleges
-	//redo this entire bitomg.
-	rv=collegeAllocator(rv,&A1,&B2,&GM); 
-	pes=collegeAllocator(pes,&A1,&B2,&GM);
-	msr=collegeAllocator(msr,&A1,&B2,&GM);
-	bms=collegeAllocator(bms,&A1,&B2,&GM);
-	rns=collegeAllocator(rns,&A1,&B2,&GM);
-	jss=collegeAllocator(jss,&A1,&B2,&GM);
+		
+	//initializing array of colleges
+	college a[6]; 
+	strcpy(a[0].name,"RVCE");
+	strcpy(a[1].name,"PESU");
+	strcpy(a[2].name,"MSRIT");
+	strcpy(a[3].name,"BMSCE");
+	strcpy(a[4].name,"RNSIT");
+	strcpy(a[5].name,"JSSATE");
+	
+	//college allocation
+	for(int i=0; i<6;i++)
+		a[i]=collegeAllocator(a[i],&A1,&B2,&GM);
+	
+	
 }
