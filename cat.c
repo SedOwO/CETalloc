@@ -133,6 +133,37 @@ college collegeAllocator(college c, node** A1, node** B2, node** GM){
 	return c;
 }
 
+node *generateBST(node *root, node* studentList){
+        while(studentList){
+                node* new1=malloc(sizeof(node));
+                new1->uid=studentList->uid;
+                new1->rank=studentList->rank;
+                strcpy(new1->name,studentList->name);
+                strcpy(new1->cat,studentList->cat);
+                strcpy(new1->clg, studentList->clg);
+                
+                if (!root)
+                        root=new1;
+		else{
+                node *pathFinder = root, *temp;
+                while (pathFinder){
+                        temp = pathFinder;
+                        if (new1->uid >= pathFinder->uid)
+                                pathFinder = pathFinder->rptr;
+                        else
+                                pathFinder = pathFinder->lptr;
+                }
+
+                if (new1->uid >= temp->uid)
+                        temp->rptr = new1;
+                else
+                        temp->lptr = new1;
+                }
+		studentList=studentList->rptr;
+        }
+         return root;
+}
+
 node* deleteStudents(node* studentList){
 	printf("Enter number of students withdrawing from KEA College allocation:\n");
 	int n,uid, foundFlag;
@@ -194,10 +225,15 @@ void main(){
 	//college allocation round 1
 	for(int i=0; i<6;i++)
 		a[i]=collegeAllocator(a[i],&A1,&B2,&GM);
+		
+	//BST for round 1
+	node* root=NULL; 
+	root = generateBST(root, studentList);
 	
 	//to remake tree for round 2
 	nukeTree(root);
-	root=NULL;
+	node* root=NULL; 
+	root = generateBST(root, studentList);
 	
 	
 }
