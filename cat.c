@@ -39,15 +39,15 @@ node* input(node *studentList){
         return studentList;
 }
 
-node* generatePQueue(node* catlist,node* studentlist,char ch){
-	while(studentlist){
-		if((studentlist->cat)[0]==ch){
+node* generatePQueue(node* catlist,node* studentList,char ch){
+	while(studentList){
+		if((studentList->cat)[0]==ch){
 			node* new1=malloc(sizeof(node));
 			new1->lptr=new1->rptr=NULL;
-			strcpy((new1->name),(studentlist->name));
-			new1->rank=studentlist->rank;
-			strcpy((new1->cat),(studentlist->cat));
-			new1->uid=studentlist->uid;
+			strcpy((new1->name),(studentList->name));
+			new1->rank=studentList->rank;
+			strcpy((new1->cat),(studentList->cat));
+			new1->uid=studentList->uid;
 			
 			if(!catlist){	
 				catlist=new1;
@@ -71,7 +71,7 @@ node* generatePQueue(node* catlist,node* studentlist,char ch){
 			temp->rptr=new1;
 			new1->lptr=temp;
 		}
-TRAVERSE:	studentlist=studentlist->rptr;
+TRAVERSE:	studentList=studentList->rptr;
 	}
 	return catlist;
 }
@@ -208,11 +208,12 @@ void nukeTree(node* root){
 
 void main(){
 	int i;
-	node* studentlist;
+	node* studentList;
+	studentList = input(studentList);
 	node* A1, *B2, *GM;//prioity queues
-	A1=generatePQueue(A1,studentlist, 'A');
-	B2=generatePQueue(B2,studentlist, 'B');
-	GM=generatePQueue(GM,studentlist, 'G');
+	A1=generatePQueue(A1,studentList, 'A');
+	B2=generatePQueue(B2,studentList, 'B');
+	GM=generatePQueue(GM,studentList, 'G');
 		
 	//initializing array of colleges
 	college a[6]; 
@@ -229,15 +230,37 @@ void main(){
 		
 	//making newStudentList
 	node* newStudentList = aiopq(a);
-		
 	//BST for round 1
 	node* root=NULL; 
-	root = generateBST(root, studentList);
+	root = generateBST(root, newStudentList);
 	
+	//display menue for first round
+	//result for round 1 
+	displayAll(newStudentList);
+	displayStudent();
+	displayCollege()
+	
+	//nuke leaving students
+	newStudentList = deleteStudents(newStudentList);
+	
+	A1=generatePQueue(A1,newStudentList, 'A');
+	B2=generatePQueue(B2,newStudentList, 'B');
+	GM=generatePQueue(GM,newStudentList, 'G');
+	//college allocation round 2
+	for(i=0; i<6;i++)
+		a[i]=collegeAllocator(a[i],&A1,&B2,&GM);
+	//remaking newStudentList
+	node* newStudentList = aiopq(a);
 	//to remake tree for round 2
 	nukeTree(root);
 	node* root=NULL; 
-	root = generateBST(root, studentList);
+	root = generateBST(root, newStudentList);
+	
+	//display menue for second round
+	//result for round 2 
+	displayAll(newStudentList);
+	displayStudent();
+	displayCollege()
 	
 	
 }
