@@ -206,6 +206,27 @@ void nukeTree(node* root){
 	}
 }
 
+void displayStudent(root){
+	int keyid;
+	printf("\nIndividual student result\n");
+	printf("Enter your UID:  ");
+	scanf("%d", keyid);
+	while(root){
+		if(keyid==root->uid)
+			break;
+		if(keyid>root->uid)
+			root=root->rptr;
+		else 
+			root=root->lptr;	
+	}
+	//now root points to key node
+	if(!root){
+		printf("Student %d not found\n", uid);
+		return;
+	}
+	printf("\nUID: %d\nName: %s\nRank: %d\n\nAllocated College: %s\n",root->uid, root->name,root->rank, root->clg);
+}
+
 void main(){
 	int i;
 	node* studentList;
@@ -237,8 +258,8 @@ void main(){
 	//display menue for first round
 	//result for round 1 
 	displayAll(newStudentList);
-	displayStudent();
-	displayCollege()
+	displayStudent(root);
+	displayCollege(a)
 	
 	//nuke leaving students
 	newStudentList = deleteStudents(newStudentList);
@@ -259,8 +280,8 @@ void main(){
 	//display menue for second round
 	//result for round 2 
 	displayAll(newStudentList);
-	displayStudent();
-	displayCollege()
+	displayStudent(root);
+	displayCollege(a)
 	
 	
 }
