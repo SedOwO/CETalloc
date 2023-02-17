@@ -133,6 +133,35 @@ college collegeAllocator(college c, node** A1, node** B2, node** GM){
 	return c;
 }
 
+node* aiopq(college a[]){
+        node *start=NULL;
+        for(int i=0;i<6;i++){
+                for(int j=0;j<25;j++){
+                        node* nNode=malloc(sizeof(node));
+                        nNode->lptr=nNode->rptr=NULL;
+                        (a[i].(pupils[j]))->uid= nNode->uid;
+                        (a[i].(pupils[j]))->rank= nNode->rank;
+                        strcpy(nNode->name,(a[i].(pupils[j]))->name);
+                        strcpy(nNode->cat,(a[i].(pupils[j]))->cat);
+                        strcpy(nNode->clg,(a[i].(pupils[j]))->clg);
+                        
+                        node* temp=start;
+                        if(start==NULL||nNode->uid < start->uid) {
+                                nNode->rptr=start;
+                                start=nNode;
+                        }
+                        else{
+                                while(temp->rptr!=NULL && temp->rptr->uid<=nNode->uid){
+                                        temp=temp->rptr;
+                                }
+                                nNode->rptr=temp->rptr;
+                                temp->rptr=nNode;
+                        }
+                }
+        }
+        
+}
+
 node *generateBST(node *root, node* studentList){
         while(studentList){
                 node* new1=malloc(sizeof(node));
@@ -162,6 +191,16 @@ node *generateBST(node *root, node* studentList){
 		studentList=studentList->rptr;
         }
          return root;
+}
+
+void displayALL(node *newStudentList){
+    	    temp=newStudentList;
+            printf("\n******CET ALLOTMENT LIST******\n");
+            printf("%20s%20s%20s%20s%20s","UID","NAME","RANK","CATEGORY","COLLEGE");
+            while(temp!=NULL){
+                printf("20%d20%s20%d20%s20%s",temp->uid,temp->name,temp->rank,temp->cat,temp->clg);
+                temp=temp->lptr;
+            }
 }
 
 node* deleteStudents(node* newStudentList){
