@@ -205,6 +205,14 @@ void nukeTree(node* root){
 		free(root);
 	}
 }
+void  nukeQueue(node* q){
+	node* nuker;
+	while(q){
+		nuker=q;
+		q=q->rptr;
+		free(nuker);
+	}
+}
 
 void displayStudent(root){
 	int keyid;
@@ -261,8 +269,12 @@ void main(){
 	displayStudent(root);
 	displayCollege(a)
 	
-	//nuke leaving students
+	//phenoix section
 	newStudentList = deleteStudents(newStudentList);
+	nukeTree(root);
+	nukeQueue(A1); A1=NULL;
+	nukeQueue(B2); B2=NULL;
+	nukeQueue(GM); GM=NULL;
 	
 	A1=generatePQueue(A1,newStudentList, 'A');
 	B2=generatePQueue(B2,newStudentList, 'B');
@@ -273,7 +285,7 @@ void main(){
 	//remaking newStudentList
 	node* newStudentList = aiopq(a);
 	//to remake tree for round 2
-	nukeTree(root);
+	
 	node* root=NULL; 
 	root = generateBST(root, newStudentList);
 	
