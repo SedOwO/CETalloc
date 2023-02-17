@@ -193,6 +193,16 @@ node *generateBST(node *root, node* studentList){
          return root;
 }
 
+void displayALL(node *newStudentList){
+    	    temp=newStudentList;
+            printf("\n******CET ALLOTMENT LIST******\n");
+            printf("%20s%20s%20s%20s%20s","UID","NAME","RANK","CATEGORY","COLLEGE");
+            while(temp!=NULL){
+                printf("20%d20%s20%d20%s20%s",temp->uid,temp->name,temp->rank,temp->cat,temp->clg);
+                temp=temp->lptr;
+            }
+}
+
 node* deleteStudents(node* newStudentList){
 	printf("Enter number of students withdrawing from KEA College allocation:\n");
 	int n,uid, foundFlag;
