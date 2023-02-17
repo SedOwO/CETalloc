@@ -164,7 +164,7 @@ node *generateBST(node *root, node* studentList){
          return root;
 }
 
-node* deleteStudents(node* studentList){
+node* deleteStudents(node* newStudentList){
 	printf("Enter number of students withdrawing from KEA College allocation:\n");
 	int n,uid, foundFlag;
 	node* temp;
@@ -173,16 +173,16 @@ node* deleteStudents(node* studentList){
 	
 	while(n--){
 		scanf("%d",&uid);
-		temp= studentList; foundFlag=0;
+		temp= newStudentList; foundFlag=0;
 		while(temp!=NULL){ //to access every node
 			if(temp->uid==uid){
 				foundFlag=1;
 				printf("Removing student %d and freeing seat in %s\n", temp->uid, temp->clg); 
-				if(temp==studentList){//first node nuking
-					studentList=studentList->rptr;
-					free(studentList->lptr);
-					studentList->lptr=NULL;
-					temp=studentList;
+				if(temp==newStudentList){//first node nuking
+					newStudentList=newStudentList->rptr;
+					free(newStudentList->lptr);
+					newStudentList->lptr=NULL;
+					temp=newStudentList;
 					continue;
 				}
 				(temp->lptr)->rptr=temp->rptr; 
@@ -195,7 +195,7 @@ node* deleteStudents(node* studentList){
 		if(foundFlag==0)
 			printf("Student %d not found\n", uid);
 	}//end of one student nuking while
-	return studentList;	
+	return newStudentList;	
 }
 
 void nukeTree(node* root){
@@ -207,6 +207,7 @@ void nukeTree(node* root){
 }
 
 void main(){
+	int i;
 	node* studentlist;
 	node* A1, *B2, *GM;//prioity queues
 	A1=generatePQueue(A1,studentlist, 'A');
@@ -223,8 +224,11 @@ void main(){
 	strcpy(a[5].name,"JSSATE");
 	
 	//college allocation round 1
-	for(int i=0; i<6;i++)
+	for(i=0; i<6;i++)
 		a[i]=collegeAllocator(a[i],&A1,&B2,&GM);
+		
+	//making newStudentList
+	node* newStudentList = aiopq(a);
 		
 	//BST for round 1
 	node* root=NULL; 
