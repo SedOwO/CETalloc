@@ -274,8 +274,8 @@ void displayStudent(root){
 	printf("\nUID: %d\nName: %s\nRank: %d\n\nAllocated College: %s\n",root->uid, root->name,root->rank, root->clg);
 }
 
-void main(){
-	int i;
+int main(){
+	int i,ch;
 	node* studentList;
 	studentList = input(studentList);
 	node* A1, *B2, *GM;//prioity queues
@@ -304,11 +304,17 @@ void main(){
 	
 	//display menue for first round
 	//result for round 1 
-	displayAll(newStudentList);
-	displayStudent(root);
-	displayCollege(a)
-	
-	//phenoix section
+	while(1){
+		printf("\nRound one Results:\n1.All Student List  2.Individial result  3. College wise  4.Proceede to round 2\n");
+		scanf("%d",&ch);
+		switch(ch){
+		case 1: displayAll(newStudentList); break;
+		case 2: displayStudent(root); break;
+		case 3: displayCollege(a); break;
+		default: goto EOR1;
+		}
+	}
+EOR1:	//phenoix section aka garbage collection.
 	newStudentList = deleteStudents(newStudentList);
 	nukeTree(root);
 	nukeQueue(A1); A1=NULL;
@@ -324,15 +330,21 @@ void main(){
 	//remaking newStudentList
 	node* newStudentList = aiopq(a);
 	//to remake tree for round 2
-	
-	node* root=NULL; 
+	root=NULL; 
 	root = generateBST(root, newStudentList);
 	
 	//display menue for second round
 	//result for round 2 
-	displayAll(newStudentList);
-	displayStudent(root);
-	displayCollege(a)
+	while(1){
+		printf("\nRound two Results:\n1.All Student List  2.Individial result  3. College wise\n");
+		scanf("%d",&ch);
+		switch(ch){
+		case 1: displayAll(newStudentList); break;
+		case 2: displayStudent(root); break;
+		case 3: displayCollege(a); break;
+		default: return 0;
+		}
+	}
 	
 	
 }
