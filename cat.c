@@ -274,6 +274,17 @@ void displayStudent(root){
 	printf("\nUID: %d\nName: %s\nRank: %d\n\nAllocated College: %s\n",root->uid, root->name,root->rank, root->clg);
 }
 
+void displayCollege(int a[]){
+	int clg, i;
+	printf("Which college?:\n1.RVCE 2.MSRIT 3.BMSCE 4.RNSIT 5.JSSATE\n");
+	scanf("%d",&clg);
+	clg--;//cuz array index starts from 0
+	printf("Student list of %s\n",a[clg]->name);
+	printf("%20s%20s\n","UID","NAME");
+	for(int i=0;i<25;i++)
+		printf("%20d%20s\n",a[clg].pupils[i]->uid,a[clg].pupils[i]->name);
+}
+
 int main(){
 	int i,ch;
 	node* studentList;
