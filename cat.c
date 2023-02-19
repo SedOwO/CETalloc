@@ -67,7 +67,7 @@ node* generatePQueue(node* catlist,node* studentList,char ch){
 			//appending
 			new1->rptr=temp->rptr;
 			if(temp->rptr) //to avoid segufault
-				(temp->rtpr)->lptr=new1;
+				(temp->rptr)->lptr=new1;
 			temp->rptr=new1;
 			new1->lptr=temp;
 		}
@@ -92,7 +92,7 @@ college collegeAllocator(college c, node** A1, node** B2, node** GM){
 			free(*A1);
 		else{
 			(*A1)=(*A1)->rptr;
-			free((*A1)->lptr));
+			free((*A1)->lptr);
 		}
 		count++;
 	}
@@ -108,7 +108,7 @@ college collegeAllocator(college c, node** A1, node** B2, node** GM){
 			free(*B2);
 		else{
 			(*B2)=(*B2)->rptr;
-			free((*B2)->lptr));
+			free((*B2)->lptr);
 		}
 		(c.pupils)[count]=dQed;
 		count++;
@@ -125,7 +125,7 @@ college collegeAllocator(college c, node** A1, node** B2, node** GM){
 			free(*GM);
 		else{
 			(*GM)=(*GM)->rptr;
-			free((*GM)->lptr));
+			free((*GM)->lptr);
 		}
 		(c.pupils)[count]=dQed;
 		count++;
@@ -139,11 +139,11 @@ node* aiopq(college a[]){
                 for(int j=0;j<25;j++){
                         node* nNode=malloc(sizeof(node));
                         nNode->lptr=nNode->rptr=NULL;
-                        (a[i].(pupils[j]))->uid= nNode->uid;
-                        (a[i].(pupils[j]))->rank= nNode->rank;
-                        strcpy(nNode->name,(a[i].(pupils[j]))->name);
-                        strcpy(nNode->cat,(a[i].(pupils[j]))->cat);
-                        strcpy(nNode->clg,(a[i].(pupils[j]))->clg);
+                        a[i].pupils[j]->uid= nNode->uid;
+                        a[i].pupils[j]->rank= nNode->rank;
+                        strcpy(nNode->name,a[i].pupils[j]->name);
+                        strcpy(nNode->cat,a[i].pupils[j]->cat);
+                        strcpy(nNode->clg,a[i].pupils[j]->clg);
                         
                         node* temp=start;
                         if(start==NULL||nNode->uid < start->uid) {
@@ -194,7 +194,7 @@ node *generateBST(node *root, node* studentList){
 }
 
 void displayAll(node *newStudentList){
-    	    temp=newStudentList;
+    	    node* temp=newStudentList;
             printf("\n******CET ALLOTMENT LIST******\n");
             printf("%20s%20s%20s%20s%20s\n","UID","NAME","RANK","CATEGORY","COLLEGE");
             while(temp!=NULL){
@@ -253,11 +253,11 @@ void  nukeQueue(node* q){
 	}
 }
 
-void displayStudent(root){
+void displayStudent(node* root){
 	int keyid;
 	printf("\nIndividual student result\n");
 	printf("Enter your UID:  ");
-	scanf("%d", keyid);
+	scanf("%d", &keyid);
 	while(root){
 		if(keyid==root->uid)
 			break;
@@ -268,18 +268,18 @@ void displayStudent(root){
 	}
 	//now root points to key node
 	if(!root){
-		printf("Student %d not found\n", uid);
+		printf("Student %d not found\n", keyid);
 		return;
 	}
 	printf("\nUID: %d\nName: %s\nRank: %d\n\nAllocated College: %s\n",root->uid, root->name,root->rank, root->clg);
 }
 
-void displayCollege(int a[]){
+void displayCollege(college a[]){
 	int clg, i;
-	printf("Which college?:\n1.RVCE 2.MSRIT 3.BMSCE 4.RNSIT 5.JSSATE\n");
+	printf("Which college?:\n1.RVCE 2. PESU 3.MSRIT 4.BMSCE 5.RNSIT 6.JSSATE\n");
 	scanf("%d",&clg);
 	clg--;//cuz array index starts from 0
-	printf("Student list of %s\n",a[clg]->name);
+	printf("Student list of %s\n",a[clg].name);
 	printf("%20s%20s\n","UID","NAME");
 	for(int i=0;i<25;i++)
 		printf("%20d%20s\n",a[clg].pupils[i]->uid,a[clg].pupils[i]->name);
@@ -339,7 +339,7 @@ EOR1:	//phenoix section aka garbage collection.
 	for(i=0; i<6;i++)
 		a[i]=collegeAllocator(a[i],&A1,&B2,&GM);
 	//remaking newStudentList
-	node* newStudentList = aiopq(a);
+	newStudentList = aiopq(a);
 	//to remake tree for round 2
 	root=NULL; 
 	root = generateBST(root, newStudentList);
