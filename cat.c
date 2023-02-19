@@ -7,9 +7,9 @@
 typedef struct Student{
 	int uid;
 	char name[20];
-	int rank;
-	char cat[2];
-	char clg[10];
+	char cat[2];//changed
+	int rank;//order
+	char clg[10];//omfg hahaha
 	struct Student *lptr, *rptr;
 }node;
 typedef struct College{
@@ -78,22 +78,19 @@ TRAVERSE:	studentList=studentList->rptr;
 
 college collegeAllocator(college c, node** A1, node** B2, node** GM){
 	int count=0;
-	node* dQed;
+	node* dQed, *nuker;
 	while(count<A1SEATS){
 		dQed=malloc(sizeof(node));
 		dQed->uid=(*A1)->uid;
 		strcpy(dQed->name,(*A1)->name);
-		dQed->rank=(*A1)->rank;
 		strcpy(dQed->cat,(*A1)->cat);
+		dQed->rank=(*A1)->rank;
 		strcpy(dQed->clg,c.name);
 		(c.pupils)[count]=dQed;
-		
-		if(!(*A1)->rptr)
-			free(*A1);
-		else{
-			(*A1)=(*A1)->rptr;
-			free((*A1)->lptr);
-		}
+	
+		nuker=(*A1);
+		(*A1)=(*A1)->rptr;
+		free(nuker);
 		count++;
 	}
 	while(count<B2SEATS+A1SEATS){
@@ -103,14 +100,11 @@ college collegeAllocator(college c, node** A1, node** B2, node** GM){
 		dQed->rank=(*B2)->rank;
 		strcpy(dQed->cat,(*B2)->cat);
 		strcpy(dQed->clg,c.name);
-		
-		if(!(*B2)->rptr)
-			free(*B2);
-		else{
-			(*B2)=(*B2)->rptr;
-			free((*B2)->lptr);
-		}
 		(c.pupils)[count]=dQed;
+		
+		nuker=(*B2);
+		(*B2)=(*B2)->rptr;
+		free(nuker);
 		count++;
 	}
 	while(count<A1SEATS+B2SEATS+GMSEATS){
@@ -120,14 +114,12 @@ college collegeAllocator(college c, node** A1, node** B2, node** GM){
 		dQed->rank=(*GM)->rank;
 		strcpy(dQed->cat,(*GM)->cat);
 		strcpy(dQed->clg,c.name);
-		
-		if(!(*GM)->rptr)
-			free(*GM);
-		else{
-			(*GM)=(*GM)->rptr;
-			free((*GM)->lptr);
-		}
 		(c.pupils)[count]=dQed;
+		
+		nuker=(*GM);
+		(*GM)=(*GM)->rptr;
+		free(nuker);
+		
 		count++;
 	}
 	return c;
@@ -139,8 +131,10 @@ node* aiopq(college a[]){
                 for(int j=0;j<25;j++){
                         node* nNode=malloc(sizeof(node));
                         nNode->lptr=nNode->rptr=NULL;
-                        a[i].pupils[j]->uid= nNode->uid;
-                        a[i].pupils[j]->rank= nNode->rank;
+                        //a[i].pupils[j]->uid= nNode->uid;
+                        //a[i].pupils[j]->rank= nNode->rank;
+                        nNode->uid = a[i].pupils[j]->uid;
+                        nNode->rank = a[i].pupils[j]->rank;
                         strcpy(nNode->name,a[i].pupils[j]->name);
                         strcpy(nNode->cat,a[i].pupils[j]->cat);
                         strcpy(nNode->clg,a[i].pupils[j]->clg);
@@ -196,9 +190,9 @@ node *generateBST(node *root, node* studentList){
 void displayAll(node *newStudentList){
     	    node* temp=newStudentList;
             printf("\n******CET ALLOTMENT LIST******\n");
-            printf("%20s%20s%20s%20s%20s\n","UID","NAME","RANK","CATEGORY","COLLEGE");
+            printf("%10s%10s%10s%10s%10s\n\n","UID","NAME","RANK","CATEGORY","COLLEGE");
             while(temp!=NULL){
-                printf("%20d%20s%20d%20s%20s\n",temp->uid,temp->name,temp->rank,temp->cat,temp->clg);
+                printf("%10d%10s%10d%10s%10s\n",temp->uid,temp->name,temp->rank,temp->cat,temp->clg);
                 temp=temp->rptr;
             }
 }
@@ -280,7 +274,7 @@ void displayCollege(college a[]){
 	scanf("%d",&clg);
 	clg--;//cuz array index starts from 0
 	printf("Student list of %s\n",a[clg].name);
-	printf("%20s%20s\n","UID","NAME");
+	printf("%20s%20s\n\n","UID","NAME");
 	for(int i=0;i<25;i++)
 		printf("%20d%20s\n",a[clg].pupils[i]->uid,a[clg].pupils[i]->name);
 }
@@ -289,15 +283,10 @@ int main(){
 	int i,ch;
 	node* studentList=NULL;
 	studentList = input(studentList);
-	//printf("in main");
-	node* A1=NULL, *B2=NULL, *GM=NULL;//prioity queues
+	node* A1=NULL, *B2=NULL, *GM=NULL;
 	A1=generatePQueue(A1,studentList, 'A');
-	printf("after first generate pq");
 	B2=generatePQueue(B2,studentList, 'B');
-	printf("\nafter 2nd pq");
 	GM=generatePQueue(GM,studentList, 'G');
-		
-	//initializing array of colleges
 	college a[6]; 
 	strcpy(a[0].name,"RVCE");
 	strcpy(a[1].name,"PESU");
@@ -319,7 +308,7 @@ int main(){
 	//display menue for first round
 	//result for round 1 
 	while(1){
-		printf("\nRound one Results:\n1.All Student List  2.Individial result  3. College wise  4.Proceede to round 2\n");
+		printf("\n\n\nRound one Results:\n\n1.All Student List  2.Individial result  3. College wise  4.Proceede to round 2\n");
 		scanf("%d",&ch);
 		switch(ch){
 		case 1: displayAll(newStudentList); break;
@@ -359,7 +348,5 @@ EOR1:	//phenoix section aka garbage collection.
 		default: return 0;
 		}
 	}
-	
-	
 }
 //printf("\n");
