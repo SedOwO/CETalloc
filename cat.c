@@ -199,7 +199,7 @@ void displayAll(node *newStudentList){
             printf("%20s%20s%20s%20s%20s\n","UID","NAME","RANK","CATEGORY","COLLEGE");
             while(temp!=NULL){
                 printf("%20d%20s%20d%20s%20s\n",temp->uid,temp->name,temp->rank,temp->cat,temp->clg);
-                temp=temp->lptr;
+                temp=temp->rptr;
             }
 }
 
