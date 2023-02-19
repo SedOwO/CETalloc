@@ -287,11 +287,14 @@ void displayCollege(college a[]){
 
 int main(){
 	int i,ch;
-	node* studentList;
+	node* studentList=NULL;
 	studentList = input(studentList);
-	node* A1, *B2, *GM;//prioity queues
+	//printf("in main");
+	node* A1=NULL, *B2=NULL, *GM=NULL;//prioity queues
 	A1=generatePQueue(A1,studentList, 'A');
+	printf("after first generate pq");
 	B2=generatePQueue(B2,studentList, 'B');
+	printf("\nafter 2nd pq");
 	GM=generatePQueue(GM,studentList, 'G');
 		
 	//initializing array of colleges
