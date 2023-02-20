@@ -163,8 +163,11 @@ node* aiopq(college a[]){
 				continue;
 			}
 			//insert left
-			if(temp->lptr)//first node case
+			if(temp->lptr){//non first node case
 				temp->lptr->rptr=new1;
+			}
+			else //first node
+				start = new1;
 			new1->rptr=temp;
 			new1->lptr=temp->lptr;
 			temp->lptr=new1;
@@ -207,9 +210,9 @@ node *generateBST(node *root, node* studentList){
 void displayAll(node *newStudentList){
     	    node* temp=newStudentList;
             printf("\n******CET ALLOTMENT LIST******\n");
-            printf("%20s%20s%20s%20s%20s\n\n","UID","NAME","RANK","CATEGORY","COLLEGE");
+            printf("%5s%20s%20s%20s%20s\n\n","UID","NAME","RANK","CATEGORY","COLLEGE");
             while(temp!=NULL){
-                printf("%20d%20s%20d%20s%20s\n",temp->uid,temp->name,temp->rank,temp->cat,temp->clg);
+                printf("%5d%20s%20d%20s%20s\n",temp->uid,temp->name,temp->rank,temp->cat,temp->clg);
                 temp=temp->rptr;
             }
 }
@@ -228,11 +231,10 @@ node* deleteStudents(node* newStudentList){
 			if(temp->uid==uid){
 				foundFlag=1;
 				printf("Removing student %d and freeing seat in %s\n", temp->uid, temp->clg); 
-				if(temp==newStudentList){//first node nuking
+				if(newStudentList->uid==uid){//first node nuking
 					newStudentList=newStudentList->rptr;
 					free(newStudentList->lptr);
 					newStudentList->lptr=NULL;
-					temp=newStudentList;
 					n--;
 					break;
 				}
@@ -341,6 +343,7 @@ int main(){
 	}
 EOR1:	//phenoix section aka garbage collection.
 	newStudentList = deleteStudents(newStudentList);
+	
 	nukeTree(root); root=NULL; 
 	nukeQueue(A1); A1=NULL;
 	nukeQueue(B2); B2=NULL;
@@ -350,6 +353,7 @@ EOR1:	//phenoix section aka garbage collection.
 	A1=generatePQueue(A1,newStudentList, 'A');
 	B2=generatePQueue(B2,newStudentList, 'B');
 	GM=generatePQueue(GM,newStudentList, 'G');
+	
 
 	//college allocation round 2
 	for(i=0; i<6;i++)
