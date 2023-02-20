@@ -79,7 +79,7 @@ TRAVERSE:	studentList=studentList->rptr;
 college collegeAllocator(college c, node** A1, node** B2, node** GM){
 	int count=0;
 	node* dQed, *nuker;
-	while(count<A1SEATS){
+	while(count<A1SEATS && (*A1)){
 		dQed=malloc(sizeof(node));
 		dQed->uid=(*A1)->uid;
 		strcpy(dQed->name,(*A1)->name);
@@ -93,7 +93,7 @@ college collegeAllocator(college c, node** A1, node** B2, node** GM){
 		free(nuker);
 		count++;
 	}
-	while(count<B2SEATS+A1SEATS){
+	while (count < B2SEATS + A1SEATS && (*B2)){
 		dQed=malloc(sizeof(node));
 		dQed->uid=(*B2)->uid;
 		strcpy(dQed->name,(*B2)->name);
@@ -107,7 +107,8 @@ college collegeAllocator(college c, node** A1, node** B2, node** GM){
 		free(nuker);
 		count++;
 	}
-	while(count<A1SEATS+B2SEATS+GMSEATS){
+	while (count < A1SEATS + B2SEATS + GMSEATS && (*GM))
+	{
 		dQed=malloc(sizeof(node));
 		dQed->uid=(*GM)->uid;
 		strcpy(dQed->name,(*GM)->name);
@@ -340,11 +341,14 @@ EOR1:	//phenoix section aka garbage collection.
 	A1=generatePQueue(A1,newStudentList, 'A');
 	B2=generatePQueue(B2,newStudentList, 'B');
 	GM=generatePQueue(GM,newStudentList, 'G');
+
 	//college allocation round 2
 	for(i=0; i<6;i++)
 		a[i]=collegeAllocator(a[i],&A1,&B2,&GM);
+	
 	//remaking newStudentList
 	newStudentList = aiopq(a);
+
 	//to remake tree for round 2
 	root = generateBST(root, newStudentList);
 	
