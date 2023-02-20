@@ -226,12 +226,13 @@ node* deleteStudents(node* newStudentList){
 					free(newStudentList->lptr);
 					newStudentList->lptr=NULL;
 					temp=newStudentList;
-					continue;
+					break;
 				}
 				(temp->lptr)->rptr=temp->rptr; 
 				if(temp->rptr) //if temp is NOT last node
 					(temp->rptr)->lptr=temp->lptr; 
 				free(temp);
+				break;
 			}
 			temp=temp->rptr; //traversal wen miss
 		}
