@@ -214,7 +214,7 @@ node* deleteStudents(node* newStudentList){
 	scanf("%d", &n);
 	printf("Enter the UIDs of %d students:\n", n);
 	
-	while(n--){
+	while(n){
 		scanf("%d",&uid);
 		temp= newStudentList; foundFlag=0;
 		while(temp!=NULL){ //to access every node
@@ -226,12 +226,14 @@ node* deleteStudents(node* newStudentList){
 					free(newStudentList->lptr);
 					newStudentList->lptr=NULL;
 					temp=newStudentList;
+					n--;
 					break;
 				}
 				(temp->lptr)->rptr=temp->rptr; 
 				if(temp->rptr) //if temp is NOT last node
 					(temp->rptr)->lptr=temp->lptr; 
 				free(temp);
+				n--;
 				break;
 			}
 			temp=temp->rptr; //traversal wen miss
@@ -330,7 +332,7 @@ int main(){
 	}
 EOR1:	//phenoix section aka garbage collection.
 	newStudentList = deleteStudents(newStudentList);
-	nukeTree(root);
+	nukeTree(root); root=NULL; 
 	nukeQueue(A1); A1=NULL;
 	nukeQueue(B2); B2=NULL;
 	nukeQueue(GM); GM=NULL;
@@ -344,7 +346,6 @@ EOR1:	//phenoix section aka garbage collection.
 	//remaking newStudentList
 	newStudentList = aiopq(a);
 	//to remake tree for round 2
-	root=NULL; 
 	root = generateBST(root, newStudentList);
 	
 	//display menue for second round
