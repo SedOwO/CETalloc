@@ -154,9 +154,9 @@ node* aiopq(college a[]){
 				new1->lptr=temp;
 				continue;
 			}
-			
 			//insert left
-			temp->lptr->rptr=new1;
+			if(temp->lptr)//first node case
+				temp->lptr->rptr=new1;
 			new1->rptr=temp;
 			new1->lptr=temp->lptr;
 			temp->lptr=new1;
