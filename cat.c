@@ -126,34 +126,43 @@ college collegeAllocator(college c, node** A1, node** B2, node** GM){
 }
 
 node* aiopq(college a[]){
-        node *start=NULL;
-        for(int i=0;i<6;i++){
-                for(int j=0;j<25;j++){
-                        node* nNode=malloc(sizeof(node));
-                        nNode->lptr=nNode->rptr=NULL;
-                        //a[i].pupils[j]->uid= nNode->uid;
-                        //a[i].pupils[j]->rank= nNode->rank;
-                        nNode->uid = a[i].pupils[j]->uid;
-                        nNode->rank = a[i].pupils[j]->rank;
-                        strcpy(nNode->name,a[i].pupils[j]->name);
-                        strcpy(nNode->cat,a[i].pupils[j]->cat);
-                        strcpy(nNode->clg,a[i].pupils[j]->clg);
-                        
-                        node* temp=start;
-                        if(start==NULL||nNode->uid < start->uid) {
-                                nNode->rptr=start;
-                                start=nNode;
-                        }
-                        else{
-                                while(temp->rptr!=NULL && temp->rptr->uid<=nNode->uid){
-                                        temp=temp->rptr;
-                                }
-                                nNode->rptr=temp->rptr;
-                                temp->rptr=nNode;
-                        }
-                }
-        }
-        
+	node* start=NULL, *temp, *new1;
+	for(int i=0;i<6;i++){
+		for(int j=0; j<25; j++){
+			//create and initialize new std node
+			new1=malloc(sizeof(node));
+			new1->lptr=new1->rptr=NULL;
+			new1->uid = a[i].pupils[j]->uid;
+			strcpy(new1->name, a[i].pupils[j]->name);
+			new1->rank = a[i].pupils[j]->rank;
+			strcpy(new1->clg, a[i].name);
+			
+			//inserting in pq
+			if(!start){//first node case
+				start=new1;
+				continue;
+			}
+			temp=start;
+			while(new1->rank > temp->rank){
+				//try
+				if(!temp->rptr)
+					break;
+				temp=temp->rptr;	
+			}//catch
+			if(!temp->rptr && new1->rank > temp->rank){//last node insert to right
+				temp->rptr=new1;
+				new1->lptr=temp;
+				continue;
+			}
+			
+			//insert left
+			temp->lptr->rptr=new1;
+			new1->rptr=temp;
+			new1->lptr=temp->lptr;
+			temp->lptr=new1;
+		}
+	}
+	return start;
 }
 
 node *generateBST(node *root, node* studentList){
