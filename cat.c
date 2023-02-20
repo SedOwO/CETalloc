@@ -17,6 +17,12 @@ typedef struct College{
 	node* pupils[25];
 }college;
 
+void arrayToZero(college a[]){
+	for(int i=0;i<6;i++)
+		for(int j=0;j<25;j++)
+			a[i].pupils[j]=NULL;
+}
+
 node* input(node *studentList){
         int n;
         printf("Number of students(<=150):\n");
@@ -129,7 +135,7 @@ college collegeAllocator(college c, node** A1, node** B2, node** GM){
 node* aiopq(college a[]){
 	node* start=NULL, *temp, *new1;
 	for(int i=0;i<6;i++){
-		for(int j=0; j<25; j++){
+		for(int j=0; a[i].pupils[j] && j<25; j++){
 			//create and initialize new std node
 			new1=malloc(sizeof(node));
 			new1->lptr=new1->rptr=NULL;
@@ -289,7 +295,7 @@ void displayCollege(college a[]){
 	clg--;//cuz array index starts from 0
 	printf("Student list of %s\n",a[clg].name);
 	printf("%20s%20s\n\n","UID","NAME");
-	for(int i=0;i<25;i++)
+	for(int i=0; a[clg].pupils[i] && i<25;i++)
 		printf("%20d%20s\n",a[clg].pupils[i]->uid,a[clg].pupils[i]->name);
 }
 
@@ -298,10 +304,12 @@ int main(){
 	node* studentList=NULL;
 	studentList = input(studentList);
 	node* A1=NULL, *B2=NULL, *GM=NULL;
+	college a[6]; 
+	arrayToZero(a);
+	
 	A1=generatePQueue(A1,studentList, 'A');
 	B2=generatePQueue(B2,studentList, 'B');
 	GM=generatePQueue(GM,studentList, 'G');
-	college a[6]; 
 	strcpy(a[0].name,"RVCE");
 	strcpy(a[1].name,"PESU");
 	strcpy(a[2].name,"MSRIT");
@@ -337,7 +345,8 @@ EOR1:	//phenoix section aka garbage collection.
 	nukeQueue(A1); A1=NULL;
 	nukeQueue(B2); B2=NULL;
 	nukeQueue(GM); GM=NULL;
-	
+	arrayToZero(a);
+
 	A1=generatePQueue(A1,newStudentList, 'A');
 	B2=generatePQueue(B2,newStudentList, 'B');
 	GM=generatePQueue(GM,newStudentList, 'G');
