@@ -190,9 +190,9 @@ node *generateBST(node *root, node* studentList){
 void displayAll(node *newStudentList){
     	    node* temp=newStudentList;
             printf("\n******CET ALLOTMENT LIST******\n");
-            printf("%-10s%-10s%-10s%-10s%-10s\n\n","UID","NAME","RANK","CATEGORY","COLLEGE");
+            printf("%10s%10s%10s%10s%10s\n\n","UID","NAME","RANK","CATEGORY","COLLEGE");
             while(temp!=NULL){
-                printf("%-10d%-10s%-10d%-10s%-10s\n",temp->uid,temp->name,temp->rank,temp->cat,temp->clg);
+                printf("%10d%10s%10d%10s%10s\n",temp->uid,temp->name,temp->rank,temp->cat,temp->clg);
                 temp=temp->rptr;
             }
 }
@@ -274,9 +274,9 @@ void displayCollege(college a[]){
 	scanf("%d",&clg);
 	clg--;//cuz array index starts from 0
 	printf("Student list of %s\n",a[clg].name);
-	printf("%-10s%-10s\n\n","UID","NAME");
+	printf("%20s%20s\n\n","UID","NAME");
 	for(int i=0;i<25;i++)
-		printf("%-10d%-10s\n",a[clg].pupils[i]->uid,a[clg].pupils[i]->name);
+		printf("%20d%20s\n",a[clg].pupils[i]->uid,a[clg].pupils[i]->name);
 }
 
 int main(){
