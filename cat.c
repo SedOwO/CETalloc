@@ -136,6 +136,7 @@ node* aiopq(college a[]){
 			strcpy(new1->name, a[i].pupils[j]->name);
 			new1->rank = a[i].pupils[j]->rank;
 			strcpy(new1->clg, a[i].name);
+			strcpy(new1->cat, a[i].pupils[j]->cat);
 			
 			//inserting in pq
 			if(!start){//first node case
