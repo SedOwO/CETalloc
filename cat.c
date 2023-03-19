@@ -25,13 +25,22 @@ void arrayToZero(college a[]){
 
 node* input(node *studentList){
         int n;
-        printf("Number of students(<=150):\n");
+        FILE *fp;
+	fp = fopen("data.bin", "rb");
+        node tempStudent;
+        printf("Number of students to import?:(<=150):\n");
         scanf("%d",&n);
-        printf("\nEnter Student Details:\n UID   NAME   RANK   CATEGORY:\n");
+        printf("\nImporting %d students data from database...\n\n",n);
+        
         while(n--){
                 node* new1=malloc(sizeof(node));
-                scanf("%d%s%d%s", &new1->uid, new1->name, &new1->rank, new1->cat);
                 new1->lptr=new1->rptr=NULL;
+                
+                fread(&tempStudent, sizeof(node), 1, fp);
+                new1->uid = tempStudent.uid;
+                strcpy(new1->name, tempStudent.name);
+                new1->rank = tempStudent.rank;
+                strcpy(new1->cat, tempStudent.cat);
                 
                 node* temp;
                 if(!studentList)
