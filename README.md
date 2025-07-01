@@ -117,6 +117,3 @@ Deletes the students who have withdrawn from the list.
 
 *parameters:*
 * list form which the nodes have to be deleted
-
-
-TEMP # DELETE ME
